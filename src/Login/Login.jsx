@@ -1,19 +1,28 @@
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import React from 'react';
+import React, { useState } from 'react';
 import { auth } from '../Firebase/_firebase.init';
 
 const Login = () => {
+
+    const [error, setError] = useState('')
+    const [succes, setSucces] = useState(false);
 
     const handleSubmit = (e)=>{
           e.preventDefault();
           const email = e.target.email.value;
           const password = e.target.password.value;
           console.log('Register', email, password);
+        //  reset error or succes set-up
+        setError(null);
+        setSucces(false)
 
           createUserWithEmailAndPassword(auth, email, password).then(result => {
             console.log(result.user)
+            setSucces(true);
+            e.target.reset();
           }).catch(err =>{
-            console.log(err)
+            console.log(err.message);
+            setError(err.message)
           })
     }
 
@@ -34,6 +43,14 @@ const Login = () => {
           <div><a className="link link-hover">Forgot password?</a></div>
           <button className="btn btn-neutral mt-4">Login</button>
         </fieldset>
+        {
+            succes && <p className='text-green-500'>Acount Create Succes</p>
+        }
+
+        {
+            error && <p className='text-red-600'>{error}</p>
+        }
+        
         </form>
       </div>
     </div>

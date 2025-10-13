@@ -12,9 +12,17 @@ const Login = () => {
           const email = e.target.email.value;
           const password = e.target.password.value;
           console.log('Register', email, password);
+
         //  reset error or succes set-up
         setError(null);
-        setSucces(false)
+        setSucces(false);
+
+        //   RegEx Password Check
+        const lengthCheck = /^.{6,}$/;
+        if(!lengthCheck.test(password)){
+            setError("Password must be in 6 Characters");
+            return;
+        }
 
           createUserWithEmailAndPassword(auth, email, password).then(result => {
             console.log(result.user)
@@ -44,7 +52,7 @@ const Login = () => {
           <button className="btn btn-neutral mt-4">Login</button>
         </fieldset>
         {
-            succes && <p className='text-green-500'>Acount Create Succes</p>
+            succes && <p className='text-green-500'>Account Created Success</p>
         }
 
         {

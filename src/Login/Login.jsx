@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { auth } from '../Firebase/_firebase.init';
 import { FaEye } from 'react-icons/fa';
 import { LuEyeClosed } from 'react-icons/lu';
+import { Link } from 'react-router';
 
 const Login = () => {
 
@@ -14,7 +15,8 @@ const Login = () => {
           e.preventDefault();
           const email = e.target.email.value;
           const password = e.target.password.value;
-          console.log('Register', email, password);
+          const terms = e.target.terms.checked;
+          console.log('Register', email, password, terms);
 
         //  reset error or succes set-up
         setError(null);
@@ -26,13 +28,17 @@ const Login = () => {
             setError("Password must be in 6 Characters");
             return;
         }
+        if(!terms){
+          setError('Please Accept Our Terms And Condition');
+          return;
+        }
 
           createUserWithEmailAndPassword(auth, email, password).then(result => {
-            console.log(result.user)
+            // console.log(result.user)
             setSucces(true);
             e.target.reset();
           }).catch(err =>{
-            console.log(err.message);
+            // console.log(err.message);
             setError(err.message)
           })
     }
@@ -63,8 +69,10 @@ const Login = () => {
              <button onClick={(e)=> handleShowPassword(e) } className="btn btn-xs absolute top-2 right-7">{showPassword ? <FaEye></FaEye> : <LuEyeClosed></LuEyeClosed>}</button>
          </div>
          <div className='mt-1'>
-          <label class="label">
-    <input type="checkbox" class="checkbox" />
+          <label className="label">
+    <input type="checkbox"
+     className="checkbox"
+     name='terms' />
     Accept Our Terms And Condition
   </label>
          </div>
@@ -81,6 +89,7 @@ const Login = () => {
         }
         
         </form>
+        <p className='text-center'>Already have an account? <Link className='text-blue-600 font-semibold underline' to={'/loginpage'}>LogIn</Link></p>
       </div>
     </div>
   </div>

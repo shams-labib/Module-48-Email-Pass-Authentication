@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import React, { useState } from 'react';
 import { auth } from '../Firebase/_firebase.init';
 import { FaEye } from 'react-icons/fa';
@@ -37,6 +37,13 @@ const Login = () => {
             // console.log(result.user)
             setSucces(true);
             e.target.reset();
+
+            // Send Varification Email
+
+            sendEmailVerification(result.user).then(()=> {
+              alert("Please check your email and verified")
+            })
+
           }).catch(err =>{
             // console.log(err.message);
             setError(err.message)
@@ -78,7 +85,7 @@ const Login = () => {
          </div>
 
           <div><a className="link link-hover">Forgot password?</a></div>
-          <button className="btn btn-neutral mt-4">Login</button>
+          <button className="btn btn-neutral mt-4">Register</button>
         </fieldset>
         {
             succes && <p className='text-green-500'>Account Created Success</p>

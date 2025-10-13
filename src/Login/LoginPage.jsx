@@ -48,7 +48,7 @@ const LoginPage = () => {
    <div className='mx-auto mt-10 max-w-sm space-y-5'>
      <h1 className="text-5xl text-center font-bold">Login now!</h1>
      <form onSubmit={handleSubmit}>
-        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-lg">
+        <div className="card bg-base-100 md:w-full md:max-w-sm shrink-0 shadow-lg">
         
       <div className="card-body">
         <fieldset className="fieldset">
